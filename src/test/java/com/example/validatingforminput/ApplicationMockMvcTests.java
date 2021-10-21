@@ -24,9 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -38,49 +36,38 @@ public class ApplicationMockMvcTests {
 
 	@Test
 	public void checkPersonInfoWhenNameMissingNameThenFailure() throws Exception {
-		MockHttpServletRequestBuilder createPerson = post("/")
-				.param("age", "20");
-
-		mockMvc.perform(createPerson)
+		mockMvc.perform(post("/").param("age","20"))
 			.andExpect(model().hasErrors());
 	}
 
 	@Test
 	public void checkPersonInfoWhenNameTooShortThenFailure() throws Exception {
-		MockHttpServletRequestBuilder createPerson = post("/")
-				.param("name", "R")
-				.param("age", "20");
-
-		mockMvc.perform(createPerson)
+		mockMvc.perform(post("/")
+						.param("name", "R")
+						.param("age", "20"))
 			.andExpect(model().hasErrors());
 	}
 
 	@Test
 	public void checkPersonInfoWhenAgeMissingThenFailure() throws Exception {
-		MockHttpServletRequestBuilder createPerson = post("/")
-				.param("name", "Rob");
-
-		mockMvc.perform(createPerson)
+		mockMvc.perform(post("/")
+						.param("name", "Rob"))
 			.andExpect(model().hasErrors());
 	}
 
 	@Test
 	public void checkPersonInfoWhenAgeTooYoungThenFailure() throws Exception {
-		MockHttpServletRequestBuilder createPerson = post("/")
-				.param("age", "1")
-				.param("name", "Rob");
-
-		mockMvc.perform(createPerson)
+		mockMvc.perform(post("/")
+						.param("age", "1")
+						.param("name", "Rob"))
 			.andExpect(model().hasErrors());
 	}
 
 	@Test
 	public void checkPersonInfoWhenValidRequestThenSuccess() throws Exception {
-		MockHttpServletRequestBuilder createPerson = post("/")
-				.param("name", "Rob")
-				.param("age", "20");
-
-		mockMvc.perform(createPerson)
+		mockMvc.perform(post("/")
+						.param("name", "Rob")
+						.param("age", "20"))
 			.andExpect(model().hasNoErrors());
 	}
 }
