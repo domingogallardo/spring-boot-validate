@@ -31,43 +31,43 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class ApplicationMockMvcTests {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@Test
-	public void checkPersonInfoWhenNameMissingNameThenFailure() throws Exception {
-		mockMvc.perform(post("/").param("age","20"))
-			.andExpect(model().hasErrors());
-	}
+    @Test
+    public void checkPersonInfoWhenNameMissingNameThenFailure() throws Exception {
+        mockMvc.perform(post("/").param("age", "20"))
+                .andExpect(model().hasErrors());
+    }
 
-	@Test
-	public void checkPersonInfoWhenNameTooShortThenFailure() throws Exception {
-		mockMvc.perform(post("/")
-						.param("name", "R")
-						.param("age", "20"))
-			.andExpect(model().hasErrors());
-	}
+    @Test
+    public void checkPersonInfoWhenNameTooShortThenFailure() throws Exception {
+        mockMvc.perform(post("/")
+                        .param("name", "R")
+                        .param("age", "20"))
+                .andExpect(model().hasErrors());
+    }
 
-	@Test
-	public void checkPersonInfoWhenAgeMissingThenFailure() throws Exception {
-		mockMvc.perform(post("/")
-						.param("name", "Rob"))
-			.andExpect(model().hasErrors());
-	}
+    @Test
+    public void checkPersonInfoWhenAgeMissingThenFailure() throws Exception {
+        mockMvc.perform(post("/")
+                        .param("name", "Rob"))
+                .andExpect(model().hasErrors());
+    }
 
-	@Test
-	public void checkPersonInfoWhenAgeTooYoungThenFailure() throws Exception {
-		mockMvc.perform(post("/")
-						.param("age", "1")
-						.param("name", "Rob"))
-			.andExpect(model().hasErrors());
-	}
+    @Test
+    public void checkPersonInfoWhenAgeTooYoungThenFailure() throws Exception {
+        mockMvc.perform(post("/")
+                        .param("age", "1")
+                        .param("name", "Rob"))
+                .andExpect(model().hasErrors());
+    }
 
-	@Test
-	public void checkPersonInfoWhenValidRequestThenSuccess() throws Exception {
-		mockMvc.perform(post("/")
-						.param("name", "Rob")
-						.param("age", "20"))
-			.andExpect(model().hasNoErrors());
-	}
+    @Test
+    public void checkPersonInfoWhenValidRequestThenSuccess() throws Exception {
+        mockMvc.perform(post("/")
+                        .param("name", "Rob")
+                        .param("age", "20"))
+                .andExpect(model().hasNoErrors());
+    }
 }
